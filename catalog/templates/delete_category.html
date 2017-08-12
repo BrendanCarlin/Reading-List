@@ -1,0 +1,30 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "books-header.html" %}
+
+	<div class="row jumbotron page-title">
+		<div class="col-md-12">
+			<h1>Delete Reading List</h1>			
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<p>Are you sure you want to delete <strong>{{readingList.name}}</strong>?</p>
+			<form method="POST">
+				<input type="submit" name="delete" value="Delete">
+				<a class="names" href="{{ url_for('showCategories') }}">Cancel</a>
+			</form>		
+		</div>
+	</div>
+
+	<br>
+	<br>
+
+	<div class="row">
+		<div class="col-md-12">
+			<hr>
+		</div>
+	</div>
+
+{% endblock %}

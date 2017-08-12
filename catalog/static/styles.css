@@ -1,0 +1,91 @@
+body {
+	/*background-color: #00B286;*/
+	background-color: #C8D9CD;
+	color: white;
+}
+
+a {
+	color: inherit;
+	padding-right: 1em;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+a:visited {
+	color: inherit;
+	text-decoration: none;
+}
+
+input, textarea {
+	width: 100%;
+	color: #393E3D;
+}
+
+
+input[type=submit] {
+	width: auto;
+	background-color: #393E3D;
+	color: white;
+	padding-top: 0;
+	margin-right: 1em;
+}
+
+.update-cancel {
+	text-align: right;
+	padding: 1em;
+}
+
+.links {
+	text-align: right;
+}
+
+.names:hover {
+	color: #D6EC0E;
+}
+
+.header {
+	background-color: #393E3D;
+	color: white;
+	padding: 1em;
+}
+
+.container {
+	background-color: #445E5D;
+	height: 100%;
+}
+
+.page-title {
+	background-image: url('../static/bookcase.jpg');
+	height: 16em;
+	color: #F3FFFC;
+	text-align: right;
+	text-shadow: 4px 2px #393E3D;
+}
+
+h4 {
+	color: #F3FFFC;
+	text-align: right;
+	text-shadow: 4px 2px #393E3D;	
+}
+
+.flash {
+	background-color: rgba(105, 255, 135, .2);
+	color: #64E854;
+}
+
+.login {
+	background-color: #F8FAE1;
+	text-align: center;
+	color: black;
+	height: 20em;
+	border-style: groove;
+	border-width: medium;
+	border-color: red;
+	padding-top: 2em;
+	border-radius: 10px;
+	box-shadow: 8px 8px 5px grey;
+
+}

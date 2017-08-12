@@ -1,0 +1,73 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+	<div class="row jumbotron page-title">
+		<div class="col-md-12">
+			<h1>Reading Lists</h1>
+		</div>
+	</div>
+
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+
+	{% for message in messages %}
+	<div class="row flash">
+		<div class="col-md-11">
+			<p>
+				<span class="glyphicon glyphicon-ok"></span>
+				<strong>  {{ message }}</strong>
+			</p>		
+		</div>
+	</div>
+	{% endfor %}
+	<br>
+	{% endif %}
+	{% endwith %}
+
+	<div class="row">
+		<div class="col-md-12">
+			<a class="names" href="{{ url_for('newCategory') }}">
+			<span class="glyphicon glyphicon-plus"></span>
+			New Reading List
+			</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<hr>	
+		</div>
+	</div>
+
+	{% for i in allLists %}
+	
+	<div class="row">
+		<div class="col-md-8 names">
+			<a class="names" href="{{ url_for('showItems', list_id = i.id) }}">
+				<h3>{{ i.name }}</h3>
+			</a>
+		</div>
+		<div class="col-md-4 links">
+			<a class="names" href="{{ url_for('editCategory', readingList_id = i.id) }}">
+			<span class="glyphicon glyphicon-pencil"></span>
+			Edit
+			</a>
+			<a class="names" href="{{ url_for('deleteCategory', readingList_id = i.id) }}">
+			<span class="glyphicon glyphicon-trash"></span>
+			Delete
+			</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<hr>	
+		</div>
+	</div>
+
+	<br>
+
+	{% endfor %}
+
+{% endblock %}

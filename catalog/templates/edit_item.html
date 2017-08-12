@@ -1,0 +1,57 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "items-header.html" %}
+
+	<div class="row jumbotron page-title">
+		<div class="col-md-12">
+			<h1>{{ item.name }}</h1>
+		</div>
+	</div>
+
+	<form method="POST">
+		<div class="row">
+			<div class="col-md-2">
+				<label for="name">Name:</label>
+			</div>
+			<div class="col-md-10">
+				<input type="text" name="name" value="{{ item.name }}">	
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-2">
+				<label for="image">Image:</label>	
+			</div>
+			<div class="col-md-10">
+				<input type="text" name="image" value="{{ item.image }}">	
+			</div>
+		</div>
+			
+		<div class="row">
+			<div class="col-md-2">
+				<label for="author">Author:</label>				
+			</div>
+			<div class="col-md-10">
+				<input type="text" name="author" value="{{ item.author }}">	
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-2">
+				<label for="description">Description:</label>				
+			</div>
+			<div class="col-md-10">
+				<textarea name="description">{{ item.description }}</textarea>	
+			</div>
+		</div>
+
+		<div class="row update-cancel">
+			<div class="col-md-12">
+				<input type="submit" value="Update">
+				<a class="names" href="{{ url_for('showItems', list_id = list_id) }}">Cancel</a>				
+			</div>
+		</div>
+
+	</form>
+
+{% endblock %}

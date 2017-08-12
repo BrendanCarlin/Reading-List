@@ -1,0 +1,18 @@
+<div class="row header">
+
+	<div class="row top-menu">
+		<div class="col-md-8">
+			<a class="names" href="{{ url_for('showItems', list_id = list_id) }}">
+			<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+			Back to {{ list.name }}
+			</a>
+		</div>
+		<div class="col-md-4 links">
+			<a class="names" href="{{ url_for('disconnect')}}">
+			<span class="glyphicon glyphicon-user"></span>
+			Logout
+			</a>
+		</div>
+	</div>
+
+</div>

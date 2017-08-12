@@ -1,0 +1,32 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "books-header.html" %}
+
+	<div class="row jumbotron page-title">
+		<div class="col-md-12">
+			<h1>Edit {{ readingList.name }}</h1>
+		</div>
+	</div>
+	
+	<div class="row page-description">
+		<div class="col-md-12">
+			<p>Update the name of {{ readingList.name }}:</p>
+		</div>
+	</div>
+
+	<div class="row">
+		<form method="POST">
+			<div class="col-md-8">
+				<input type="text" name="readingList-name" value="{{ readingList.name }}">
+			</div>
+			<div class="col-md-4">
+				<input type="submit" value="Update">
+				<a class="names" href="{{ url_for('showCategories') }}">Cancel</a>				
+			</div>
+		</form>
+	</div>
+
+	<br>
+	<br>
+
+{% endblock %}

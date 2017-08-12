@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login</title>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+	</script>
+	
+	<script src="https://apis.google.com/js/platform.js?onload=start" async defer>
+	</script>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css')}}">
+</head>
+<body>
+	<script>
+  		window.fbAsyncInit = function() {
+    		FB.init({
+      			appId      : '354746178262023',
+      			xfbml      : true,
+      			version    : 'v2.9'
+    		});
+    		FB.AppEvents.logPageView();
+  		};
+
+  		// Load the SDK async
+  		(function(d, s, id){
+     		var js, fjs = d.getElementsByTagName(s)[0];
+     		if (d.getElementById(id)) {return;}
+     		js = d.createElement(s); js.id = id;
+     		js.src = "//connect.facebook.net/en_US/sdk.js";
+     		fjs.parentNode.insertBefore(js, fjs);
+   		}(document, 'script', 'facebook-jssdk'));
+	</script>
+
+	<div class="container-fluid">
+
+		<div class="row jumbotron page-title">
+			<div class="col-md-12">
+				<h1>Reading Lists</h1>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-4">
+			</div>
+
+			<div class="col-md-4 login">
+				<div id="result"></div>
+				<h2>Login</h2>
+				<hr>
+				<div id="signinButton">
+				<span class="g-signin"
+					data-scope="openid email"
+					data-clientid="20560106927-o0e92mqldsbg7ihmt3trr446i1upl2v0.apps.googleusercontent.com"
+					data-redirecturi="postmessage"
+					data-accesstype="offline"
+					data-cookiepolicy="single_host_origin"
+					data-callback="signInCallback"
+					data-approvalprompt="force">			
+				</span>
+				</div>
+				<div class="fb-login-button center-block" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false" onlogin="sendTokenToServer();"></div>
+			</div>
+
+			<div class="col-md-4">
+			</div>
+		</div>
+
+	</div>
+	
+	<script>
+		function signInCallback(authResult) {
+			if (authResult['code']) {
+				// Hide the sign-in button now that the user is authorized
+				$('#signinButton').attr('style', 'display:none');
+				$.ajax({
+					type: 'POST',
+					url: '/gconnect?state={{STATE}}',
+					processData: false,
+					contentType: 'application/octet-stream; charest=utf-8',
+					data: authResult['code'],
+					success: function(result) {
+						if (result) {
+							$('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+							setTimeout(function() {
+								window.location.href = '/reading-lists';
+							}, 4000);
+						} else if (authResult['error']) {
+							console.log('There was an error: ' + authResult['error']);
+						} else {
+							$('#result').html('Failed to make server-side call.  Check you configuration and console.');
+						}
+					}
+				});
+			}
+		}
+
+		function sendTokenToServer() {
+			var access_token = FB.getAuthResponse()['accessToken'];
+			console.log('Welcome! Fetching your access token');
+			console.log(access_token)
+			FB.api('/me', function(response) {
+				console.log('Successful login for: ' + response.name);
+				$.ajax({
+					type: 'POST',
+					url: '/fbconnect?state={{STATE}}',
+					processData: false,
+					data: access_token,
+					contentType: 'application/octet-stream; charest=utf-8',
+					success: function(result) {
+						// Handle or verify the server response if necessaray.
+						if (result) {
+							$('#result').html('Login Successful!</br>' + result + '</br> Redirecting...')
+							setTimeout(function() {
+								window.location.href="/reading-lists";
+							}, 4000);
+						
+						} else {
+							$('#result').html('Failed to make a server-side call. Check your configuration and console.');
+						}
+					}
+				})
+			})
+		}
+	</script>
+
+</body>
+</html>

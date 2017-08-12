@@ -1,0 +1,31 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "books-header.html" %}
+
+	<div class="row jumbotron page-title">
+		<div class="col-md-12">
+			<h1>Add a New Reading List</h1>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+				<p>Enter a name for your reading list:</p>
+		</div>
+	</div>
+
+	<form method="POST">
+	<div class="row">		
+		<div class="col-md-8">
+			<input type="text" placeholder="Reading List Name..." name="readingList-name">
+		</div>
+		<div class="col-md-4">
+			<input type="submit" value="Submit">			
+			<a class="names" href="{{ url_for('showCategories') }}">Cancel</a>
+		</div>
+	</div>
+	</form>
+
+	<br>
+
+{% endblock %}
