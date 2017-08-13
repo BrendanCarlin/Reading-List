@@ -3,9 +3,9 @@
 # Item Catalog Project
 # Udacity - Full Stack Nanodegree
 
-# import flask dependencies and create Flask object "app"
-from flask import Flask, render_template, url_for, request, redirect, flash, jsonify
-app = Flask(__name__)
+# import dependencies and create Flask object "app"
+from flask import Flask, render_template, url_for, request, \
+                redirect, flash, jsonify
 
 # import sqlalchemy dependencies
 from sqlalchemy import create_engine, asc
@@ -26,6 +26,8 @@ import json
 
 from flask import make_response
 import requests
+
+app = Flask(__name__)
 
 # store Client ID
 CLIENT_ID = json.loads(
@@ -72,7 +74,9 @@ def fbconnect():
             'r').read())['web']['app_id']
     app_secret = json.loads(open('fb_client_secrets.json', 'r').read())[
         'web']['app_secret']
-    url = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s' % (
+    url = ('https://graph.facebook.com/oauth/access_token?grant_type='
+           'fb_exchange_token&client_id=%s&client_secret=%s'
+           '&fb_exchange_token=%s') % (
         app_id, app_secret, access_token)
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
@@ -82,7 +86,8 @@ def fbconnect():
     # Strip expire tage from access token
     token = result.split(',')[0].split(':')[1].replace('"', '')
 
-    url = 'https://graph.facebook.com/v2.8/me?access_token=%s&fields=name,id,email' % token
+    url = ('https://graph.facebook.com/v2.8/me?access_token=%s'
+           '&fields=name,id,email') % token
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
 
@@ -100,7 +105,8 @@ def fbconnect():
     login_session['access_token'] = token
 
     # Get user picture
-    url = 'https://graph.facebook.com/v2.8/me/picture?access_token=%s&redirect=0&height=200&width=200' % token
+    url = ('https://graph.facebook.com/v2.8/me/picture?access_token=%s'
+           '&redirect=0&height=200&width=200') % token
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
     data = json.loads(result)
@@ -304,7 +310,8 @@ def editCategory(readingList_id):
     if 'username' not in login_session:
         return redirect('/login')
     if book_list.user_id != login_session['user_id']:
-        flash('You are not authorized to edit this reading list.  Please create your own reading list in order to edit.')
+        flash('You are not authorized to edit this reading list.  '
+              'Please create your own reading list in order to edit.')
         return render_template('notyourlist.html')
     if request.method == 'POST':
         if request.form['readingList-name']:
@@ -329,7 +336,8 @@ def deleteCategory(readingList_id):
     if 'username' not in login_session:
         return redirect('/login')
     if book_list.user_id != login_session['user_id']:
-        flash('You are not authorized to delete this reading list.  Please create your own reading list in order to delete.')
+        flash('You are not authorized to delete this reading list.  '
+              'Please create your own reading list in order to delete.')
         return render_template('notyourlist.html')
     if request.method == 'POST':
         if request.form['delete']:
@@ -371,7 +379,8 @@ def newItem(list_id):
     if 'username' not in login_session:
         return redirect('/login')
     if book_list.user_id != login_session['user_id']:
-        flash('You are not authorized to add a book to this list.  Please create your own reading list in order to add items.')
+        flash('You are not authorized to add a book to this list.  '
+              'Please create your own reading list in order to add items.')
         return render_template('notyourlist.html')
     if request.method == 'POST':
         if request.form['name']:
@@ -405,7 +414,8 @@ def editItem(list_id, book_id):
     if 'username' not in login_session:
         return redirect('/login')
     if reading_list.user_id != login_session['user_id']:
-        flash('You are not authorized to edit this book.  Please create your own reading list in order to edit books.')
+        flash('You are not authorized to edit this book.  '
+              'Please create your own reading list in order to edit books.')
         return render_template('notyourlist.html')
     if request.method == 'POST':
         if request.form['name']:
@@ -441,7 +451,8 @@ def deleteItem(list_id, book_id):
     if 'username' not in login_session:
         return redirect('/login')
     if reading_list.user_id != login_session['user_id']:
-        flash('You are not authorized to delete this book.  Please create your own reading list in order to delete.')
+        flash('You are not authorized to delete this book.  '
+              'Please create your own reading list in order to delete.')
         return render_template('notyourlist.html')
     if request.method == 'POST':
         session.delete(bookToDelete)
