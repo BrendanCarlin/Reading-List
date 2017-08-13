@@ -19,8 +19,11 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 # Create a dummy user
-User1 = User(name='Brendan Literarian', email='brendan@noemail.com',
-			 picture="http://http://findicons.com/files/icons/213/south_park/256/randy_marsh_head_icon_2.png")
+user1 = User(name='Brendan Literarian', email='brendan@noemail.com',
+			 picture="../static/blank_user.gif")
+
+session.add(user1)
+session.commit()
 
 # Create the Beach Reads reading list
 beach_reads = readingList(user_id=1, name = "Beach Reads")
